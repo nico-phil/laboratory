@@ -1,1 +1,1 @@
-Vidoe explanation: https://loom.com/share/folder/66b5711751044c988a2ab07d5cb2e539
+Video explanation: https://loom.com/share/folder/66b5711751044c988a2ab07d5cb2e539
