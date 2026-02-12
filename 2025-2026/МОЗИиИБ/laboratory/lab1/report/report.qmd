@@ -1,0 +1,153 @@
+---
+## Author
+author:
+  name: Филибер Никола
+  degrees: Магистран
+  email: 1132259430@rudn.ru 
+  affiliation:
+    - name: Российский университет дружбы народов
+      country: Российская Федерация
+      postal-code: 117198
+      city: Москва
+      address: ул. Миклухо-Маклая, д. 6
+
+## Title
+title: "ЛАБОРАТОРНАЯ РАБОТА Nº1"
+subtitle: "Шифры простой замены"
+license: "CC BY"
+---
+
+# Цель работы
+
+Изучение и практическое применение методов программной реализации шифров простой замены.
+
+# Задание
+
+1. Реализовать шифр Цезаря с произвольным ключом к
+2. Реализовать шифр Атбаш.
+
+# Теоретическое введение
+
+1. Шифр Цезаря ( также он является шифром простой замены ) - это
+моноалфавитная подстановка, т . е . каждой букве открытого текста ставится в
+соответствие одна буква шифртекста
+например заменяется в сообщении первую букву латинского алфавита (А ) на
+четвертую (D), вторую (В ) - на пятую (E), наконец, последнюю - на третью:
+
+| A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z | A | B | C |
+
+
+# 
+
+2. Шифр Атбаш является шифром сдвига на всю длину алфавита. Для
+алфавита, состоящего только из русских букв и пробела, таблица шифрования
+будет иметь следующий вид:
+
+| а | б | в | г | д | е | ж | з | и | й | к | л | м | н | о | п | р | с | т | у | ф | х | и | ч | и | ш | ь | ы | е | ю | я |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| я | Ю | С | ь | ы | щ | и | ч | ц | х | ф | у | т | с | р | п | о | н | м | л | к | й | и | з | ж | е | д | г | в | б | а |
+
+
+# Выполнение лабораторной работы
+## Шифр Цезаря 
+```{python}
+
+def caesar_char(char, k):
+     #uppercase letters
+    if 'A' <= char <= 'Z':
+        base = ord('A')
+        return chr((ord(char) - base + k) % 26 + base)
+    # lowercase letters
+    elif 'a' <= char <= 'z':
+        base = ord('a')
+        return chr((ord(char) - base + k) % 26 + base)
+    #not a letter, just return the letter
+    else:
+        return char
+
+
+def caesar_encrypt(text, k):
+    encrypted_result = ""
+    for c in text:
+         encrypted_result += caesar_char(c, k) 
+    return encrypted_result
+
+
+
+def caesar_decrypt_char(encrypted_char, k):
+    if 'A' <= encrypted_char <= 'Z':
+        base = ord('A')
+        return chr((ord(encrypted_char) - base - k) % 26 + base)
+    elif 'a' <= encrypted_char <= 'z':
+        base = ord('a')
+        return chr((ord(encrypted_char) - base - k) % 26 + base)
+    else:
+        return encrypted_char
+
+
+def caesar_decrypt(encrypted_text, k):
+    decrypted_result = ""
+    for c in encrypted_text:
+         decrypted_result += caesar_decrypt_char(c, k) 
+    return decrypted_result
+
+    
+print(caesar_encrypt("veni vidi vici", 3))
+
+print(caesar_decrypt("yhql ylgl ylfl", 3))
+
+```
+
+## Шифр Атбаш
+```{python}
+def atbash_char(c):
+    # uppercase letters
+    if 'A' <= c <= 'Z':
+        return chr(ord('Z') - (ord(c) - ord('A')))
+    # lowercase letters
+    elif 'a' <= c <= 'z':
+        return chr(ord('z') - (ord(c) - ord('a')))
+    else:
+        return c
+
+
+def atbash_encrypt(text):
+    result = ""
+    for c in text:
+        result += atbash_char(c)
+    return result
+
+
+
+def atbash_decrypt_char(c):
+    # uppercase letters
+    if 'A' <= c <= 'Z':
+        return chr(ord('Z') + (ord(c) - ord('A')))
+    # lowercase letters
+    elif 'a' <= c <= 'z':
+        return chr(ord('z') + (ord(c) - ord('a')))
+    else:
+        return c
+
+
+def atbash_decrypt(text):
+    result = ""
+    for c in text:
+        result += atbash_char(c)
+    return result
+
+print(atbash_encrypt("veni vidi vici"))
+print(atbash_decrypt("evmr erwr erxr"))
+
+```
+
+# Выводы
+
+Изученил и разработал методоы программной реализации шифров простой замены.
+
+# Список литературы{.unnumbered}
+https://en.wikipedia.org/wiki/Caesar_cipher
+https://en.wikibooks.org/wiki/Cryptography/Atbash_cipher
+
