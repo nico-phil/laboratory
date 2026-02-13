@@ -8,7 +8,7 @@ def normalize(text: str) -> str:
     text = text.upper()
     return "".join(ch for ch in text if ch in ALPHABET)
 
-def column_order(key: str):
+def column_order(key: str) -> list[int]:
     """
     Returns column indices in the order they should be read,
     based on alphabetical sorting of key letters.
@@ -21,9 +21,7 @@ def column_order(key: str):
 def columnar_encrypt(plaintext: str, key: str, pad: str = "X") -> str:
     pt = normalize(plaintext)
     key = normalize(key)
-    if not key:
-        raise ValueError("Key must not be empty")
-
+   
     cols = len(key)
     rows = math.ceil(len(pt) / cols)
     pt = pt.ljust(rows * cols, pad)
