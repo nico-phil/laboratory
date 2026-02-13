@@ -1,3 +1,5 @@
+import random
+
 def gcd(a: int, b: int) -> int:
     """Greatest common divisor."""
     a, b = abs(a), abs(b)
@@ -10,6 +12,8 @@ def mod_pow(a: int, e: int, n: int) -> int:
     """Fast modular exponentiation: a^e mod n."""
     # Python's built-in pow is already fast and safe.
     return pow(a, e, n)
+
+
 
 def is_probable_prime_solovay_strassen(n: int, rounds: int = 10, rng: Optional[random.Random] = None) -> bool:
     """

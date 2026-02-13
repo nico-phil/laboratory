@@ -1,28 +1,36 @@
-import random
+def jacobi(a: int, n: int) -> int:
+    """
+    Compute Jacobi symbol (a/n) for odd n >= 3.
+    Returns: -1, 0, or 1.
 
-def is_probable_prime_solovay_strassen(n: int, rounds: int = 10) -> bool:
-    if n < 2:
-        return False
-    if n in (2, 3):
-        return True
-    if n % 2 == 0:
-        return False
+    This matches the algorithmic rules typically used in Solovay–Strassen:
+      - factor out powers of 2 from a and adjust sign by n mod 8
+      - apply quadratic reciprocity when swapping (a, n)
+      - reduce a mod n
+    """
+    if n <= 0 or n % 2 == 0:
+        raise ValueError("Jacobi symbol is defined here for positive odd n.")
 
-    for _ in range(rounds):
-        a = random.randrange(2, n - 1)
-        g = gcd(a, n)
-        if g > 1:
-            return False  # composite
+    a %= n
+    result = 1
 
-        r = pow(a, (n - 1) // 2, n)
-        s = jacobi(a, n)  # -1,0,1
+    while a != 0:
+        # Step A: remove factors of 2 from a
+        while a % 2 == 0:
+            a //= 2
+            r = n % 8
+            if r == 3 or r == 5:
+                result = -result
 
-        if s == 0:
-            return False  # composite (a shares factor with n)
+        # Step B: quadratic reciprocity swap
+        a, n = n, a  # swap
 
-        # Convert s to modulo n: -1 becomes n-1
-        s_mod = s % n
-        if r != s_mod:
-            return False  # composite
+        if (a % 4 == 3) and (n % 4 == 3):
+            result = -result
 
-    return True  # probably prime
+        a %= n
+
+    # if n == 1 => result, else a became 0 with n>1 => gcd != 1 => 0
+    return result if n == 1 else 0
+
+
