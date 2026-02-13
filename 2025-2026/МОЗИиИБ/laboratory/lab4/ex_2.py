@@ -1,6 +1,6 @@
 #Binary GCD (Stein’s algorithm)
 def gcd_binary(a: int, b: int) -> int:
-    """Binary GCD (Stein's algorithm)."""
+
     a, b = abs(a), abs(b)
     if a == 0:
         return b

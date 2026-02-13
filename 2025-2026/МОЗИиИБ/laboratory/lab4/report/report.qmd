@@ -1,0 +1,299 @@
+---
+## Author
+author:
+  name: Филибер Никола
+  degrees: Магистран
+  email: 1132259430@rudn.ru 
+  affiliation:
+    - name: Российский университет дружбы народов
+      country: Российская Федерация
+      postal-code: 117198
+      city: Москва
+      address: ул. Миклухо-Маклая, д. 6
+
+## Title
+title: "ЛАБОРАТОРНАЯ РАБОТА Nº4"
+subtitle: "Вычисление наибольшего общего делителя"
+license: "CC BY"
+---
+
+# Цель работы
+
+Изучение и практическое применение методов программной реализации Алгоритмов вычисления наибольшего общего делителя.
+
+# Задание
+
+1. Реализовать алгоритм Евклида.
+2. Реализовать бинарный алгоритм Евклида.
+3. Реализовать расширенный алгоритм Евклида.
+4. Реализовать расширенный бинарный алгоритм Евклида.
+
+# Теоретическое введение(Алгоритмы)
+
+## алгоритм Евклида
+Вход. Целые числа а, b; 0 < b ≤ а.
+
+Выход.d = НОД(a,b).
+
+1. Положить ro + a , r1 - b, i - 1 .
+
+2. Найти остаток гі+ 10т деления ri-1 на; Чернышевского
+
+3. Если ri+1 = 0, то положить d - гі. В противном случае положить і - і + 1 и
+вернуться н а шаг 2.
+
+4. Результат: d.
+
+
+## бинарный алгоритм Евклида
+Вход. Целые числа а , b ; 0 < b ≤ а.
+
+Выход. d = НоД(а, b).
+
+1. Положить д - 1 .
+
+2. Пока оба числа а и в четные, выполнять а к $ b -% 9 - 29 до получения хотя бы одного нечетного значения а или b.
+
+3. Положить и < а , v + b .
+
+4. Пока и # 0 выполнять следующие действия:
+
+4.1. Пока ичетное, полагали u <- u / 2
+
+4.2. Пока четное, полагать v <- v / 2
+
+4.3. П р и и ≥ и положить и - и - v. В противном случае положить о - о - и.
+
+5. Положить d <- gv
+
+6. Резултат: d
+
+
+## расширенный алгоритм Евклида.
+
+Вход. Целые числа а , b ; 0 < b ≤ а.
+
+Выход. d = НоД(а, b).
+
+1. положить r0 <- a, r1 <- b x0 <- 1, x1 <- 0, y0 <- 0, y1 <- 1 i <- 1
+
+2. Разделить с остатком rі-1 н а ri: ri-1 = 9iri + ri+1.
+
+3. Если гі+1 = 0 , то положить d - r, х - x;, у - У. В противном случае
+положить Xі+1 - Xi-1 - 9iX;, Уi+1 - Уi-1 - 9iУі, і - і + 1 и вернуться на шаг 2.
+
+4. Результат: d , х, у.
+
+
+
+## Расширенный бинарный алгоритм Евклида.
+
+Вход. Целые числа а , b ; 0 < b ≤ а.
+
+Выход. d = НоД(а, b).
+
+1. Положить g - 1.
+
+2. Пока числа а и в четные, выполнять а -. 5 b=3 9 - 29 до получения хотя б ы одного нечетного значения а и л и b .
+
+3. Положить и + a, v + b, A - 1,B - 0,C - 0 , D - 1.
+
+4. Пока и # 0 выполнять следующие действия:
+
+4.1. Пока и четное:
+
+4.1.1. Положить и < 2
+
+4.1.2. Если оба числа А и В четные, то положить А « 2, В « - . В противном случае положить А < .
+
+4.2. Пока о четное:
+
+4.2.1. Положить о - - ⼀. 17
+
+4.2.2. Если о б а числа С и D четные, то положить C «Ę, D «C, В противном
+случае положить C <
+
+4.3. При и ≥ v положить и - и - v,А - А - С , В - В - D. В противном случае положить 0 < v - u, C - C - A,D - D - В.
+
+5. Положить d - gv,x - C, y - D.
+
+6. Результат: d, х , у.
+
+
+# Выполнение лабораторной работы
+
+## алгоритм Евклида
+```{python}
+# Euclid’s Algorithm (remainder / division method)
+def gcd_euclid(a: int, b: int) -> int:
+    """Classic Euclid GCD using remainders."""
+    a, b = abs(a), abs(b)
+    if a == 0:
+        return b
+    if b == 0:
+        return a
+
+    while b != 0:
+        a, b = b, a % b
+    return a
+
+gcd = gcd_euclid(45, 10)
+print("GCD", gcd)
+
+```
+
+## бинарный алгоритм Евклида
+```{python}
+#Binary GCD (Stein’s algorithm)
+def gcd_binary(a: int, b: int) -> int:
+
+    a, b = abs(a), abs(b)
+    if a == 0:
+        return b
+    if b == 0:
+        return a
+
+    # count common factors of 2
+    shift = 0
+    while ((a | b) & 1) == 0:  # both even
+        a >>= 1
+        b >>= 1
+        shift += 1
+
+    # make a odd
+    while (a & 1) == 0:
+        a >>= 1
+
+    while b != 0:
+        # make b odd
+        while (b & 1) == 0:
+            b >>= 1
+
+        # now a and b are odd
+        if a > b:
+            a, b = b, a
+        b = b - a  # b becomes even (difference of odds)
+
+    return a << shift
+
+gcd = gcd_binary(45, 10)
+print(gcd)
+```
+
+## расширенный алгоритм Евклида
+```{python}
+#Extended Euclid (returns gcd, x, y)
+def extended_gcd_euclid(a: int, b: int):
+    """
+    Returns (g, x, y) such that:
+      g = gcd(a, b)
+      a*x + b*y = g
+    """
+    if b == 0:
+        g = abs(a)
+        # make x carry the sign of a so identity holds
+        x = 1 if a > 0 else -1 if a < 0 else 0
+        return g, x, 0
+
+    old_r, r = a, b
+    old_x, x = 1, 0
+    old_y, y = 0, 1
+
+    while r != 0:
+        q = old_r // r
+        old_r, r = r, old_r - q * r
+        old_x, x = x, old_x - q * x
+        old_y, y = y, old_y - q * y
+
+    g = abs(old_r)
+    # Normalize sign so g is positive
+    if old_r < 0:
+        old_x, old_y = -old_x, -old_y
+
+    return g, old_x, old_y
+
+    
+gcd = extended_gcd_euclid(45, 10)
+print(gcd)
+```
+
+
+## расширенный бинарный алгоритм Евклида.
+```{python}
+def extended_gcd_binary(a: int, b: int):
+    """
+    Extended binary GCD.
+    Returns (g, x, y) such that:
+      g = gcd(a, b)
+      a*x + b*y = g
+    """
+    if a == 0:
+        return abs(b), 0, 1 if b > 0 else -1 if b < 0 else 0
+    if b == 0:
+        return abs(a), 1 if a > 0 else -1 if a < 0 else 0, 0
+
+    # Work with positive values for the binary part, but keep originals for identity.
+    a0, b0 = a, b
+    a, b = abs(a), abs(b)
+
+    # Remove common factors of 2
+    shift = 0
+    while ((a | b) & 1) == 0:
+        a >>= 1
+        b >>= 1
+        shift += 1
+
+    # u = a, v = b
+    u, v = a, b
+    A, B = 1, 0
+    C, D = 0, 1
+
+    while u != 0:
+        # while u even
+        while (u & 1) == 0:
+            u >>= 1
+            if (A & 1) == 0 and (B & 1) == 0:
+                A >>= 1
+                B >>= 1
+            else:
+                A = (A + b) >> 1
+                B = (B - a) >> 1
+
+        # while v even
+        while (v & 1) == 0:
+            v >>= 1
+            if (C & 1) == 0 and (D & 1) == 0:
+                C >>= 1
+                D >>= 1
+            else:
+                C = (C + b) >> 1
+                D = (D - a) >> 1
+
+        # subtract
+        if u >= v:
+            u = u - v
+            A = A - C
+            B = B - D
+        else:
+            v = v - u
+            C = C - A
+            D = D - B
+
+    g = v << shift  # restore factors of 2
+
+    # Now we have: a*C + b*D = gcd(a,b) where a,b are abs() reduced ones.
+    # Fix signs according to original a0, b0:
+    x, y = C, D
+    if a0 < 0:
+        x = -x
+    if b0 < 0:
+        y = -y
+
+    return g, x, y
+```
+# Выводы
+
+Изученил и разработал методоы программной реализации Алгоритмов вычисления наибольшего общего делителя.
+
+# Список литературы{.unnumbered}
+https://en.wikipedia.org/wiki/Euclidean_algorithm
