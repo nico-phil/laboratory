@@ -1,4 +1,28 @@
-def is_probable_prime_miller_rabin(n: int, rounds: int = 10) -> bool:
+def gcd(a: int, b: int) -> int:
+    """Greatest common divisor."""
+    a, b = abs(a), abs(b)
+    while b:
+        a, b = b, a % b
+    return a
+
+
+def mod_pow(a: int, e: int, n: int) -> int:
+    """Fast modular exponentiation: a^e mod n."""
+    # Python's built-in pow is already fast and safe.
+    return pow(a, e, n)
+
+def is_probable_prime_solovay_strassen(n: int, rounds: int = 10, rng: Optional[random.Random] = None) -> bool:
+    """
+    Solovay–Strassen:
+      pick random a in [2, n-2]
+      if gcd(a, n) > 1 -> composite
+      r = a^((n-1)/2) mod n
+      s = jacobi(a, n)
+      compare r with s (mod n)
+    """
+    if rng is None:
+        rng = random.Random()
+
     if n < 2:
         return False
     if n in (2, 3):
@@ -6,30 +30,20 @@ def is_probable_prime_miller_rabin(n: int, rounds: int = 10) -> bool:
     if n % 2 == 0:
         return False
 
-    # write n-1 = 2^s * d with d odd
-    d = n - 1
-    s = 0
-    while d % 2 == 0:
-        d //= 2
-        s += 1
-
     for _ in range(rounds):
-        a = random.randrange(2, n - 1)
-        x = pow(a, d, n)
+        a = rng.randrange(2, n - 1)
+        g = gcd(a, n)
+        if g > 1:
+            return False
 
-        if x == 1 or x == n - 1:
-            continue
+        r = mod_pow(a, (n - 1) // 2, n)
+        s = jacobi(a, n)
+        if s == 0:
+            return False
 
-        witness_found = True
-        for _ in range(s - 1):
-            x = (x * x) % n
-            if x == n - 1:
-                witness_found = False
-                break
-            if x == 1:
-                return False  # composite
+        # s is -1 or 1; compare modulo n
+        s_mod = s % n
+        if r != s_mod:
+            return False
 
-        if witness_found:
-            return False  # composite
-
-    return True  # probably prime
+    return True

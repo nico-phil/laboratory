@@ -1,3 +1,5 @@
+import random
+
 def is_probable_prime_solovay_strassen(n: int, rounds: int = 10) -> bool:
     if n < 2:
         return False
