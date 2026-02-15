@@ -1,38 +1,21 @@
-import random
 import math
 
-def pollards_rho(n: int, c: int = 1, seed: int = 2):
-    """
-    Pollard's rho factorization.
-    Returns a non-trivial factor of n, or None if failed.
-    """
-    if n % 2 == 0:
-        return 2
-    if n < 2:
-        return None
+def f(x:int, n:int):
+    return (x**2 + 5) % n 
 
-    def f(x):
-        return (x * x + c) % n
-
-    a = seed
-    b = seed
-
-    while True:
-        a = f(a)
-        b = f(f(b))
-        d = math.gcd(abs(a - b), n)
-
+def pollards_rho(n:int, a:int, b:int):
+    while True:   
+        a = f(a, n) % n
+        b = f(f(b, n), n) % n
+        d = math.gcd(a-b, n)
+    
+        if d > 1 and d < n:
+            p = d
+            return p
+        if d == n:
+            print("Factor not found")
+            return None
         if d == 1:
             continue
-        if d == n:
-            return None  # failure, retry with different parameters
-        return d
-
-n = 1359331
-factor = pollards_rho(n, c=5, seed=1)
-
-if factor:
-    print("Non-trivial factor found:", factor)
-    print("Other factor:", n // factor)
-else:
-    print("Factor not found, retry with different parameters.")
+   
+print(pollards_rho(1359331, 1, 1))
