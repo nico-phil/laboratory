@@ -1,113 +1,178 @@
-import random
-import math
+from math import gcd
 
-def egcd(a: int, b: int):
-    """Extended GCD: returns (g, x, y) with a*x + b*y = g."""
+
+def extended_gcd(a, b):
+    """
+    Расширенный алгоритм Евклида
+    возвращает (g, x, y) такое что
+
+    ax + by = g = gcd(a,b)
+    """
     if b == 0:
-        return abs(a), 1 if a > 0 else -1 if a < 0 else 0, 0
-    x0, y0, x1, y1 = 1, 0, 0, 1
-    aa, bb = a, b
-    while bb:
-        q = aa // bb
-        aa, bb = bb, aa - q * bb
-        x0, x1 = x1, x0 - q * x1
-        y0, y1 = y1, y0 - q * y1
-    g = abs(aa)
-    if aa < 0:
-        x0, y0 = -x0, -y0
-    return g, x0, y0
+        return (a, 1, 0)
 
-def modinv(a: int, m: int):
-    """Modular inverse of a mod m, if it exists."""
-    g, x, _ = egcd(a, m)
+    g, x1, y1 = extended_gcd(b, a % b)
+
+    x = y1
+    y = x1 - (a // b) * y1
+
+    return (g, x, y)
+
+def mod_inverse(a, m):
+    """
+    Обратный элемент a^{-1} mod m
+    """
+    g, x, _ = extended_gcd(a, m)
+
     if g != 1:
         return None
+
     return x % m
 
-def solve_linear_congruence(a: int, b: int, m: int):
+def f(value, u, v, p, a, b, r):
     """
-    Solve a*x ≡ b (mod m).
-    Returns one solution x0 (mod m/g) if solvable, else None.
+    Отображение f из алгоритма.
+
+    Поддерживается инвариант:
+
+        value = a^u * b^v (mod p)
     """
-    g = math.gcd(a, m)
-    if b % g != 0:
+
+    subset = value % 3
+
+    if subset == 0:
+
+        # value ← value * b
+        value = (value * b) % p
+        v = (v + 1) % r
+
+    elif subset == 1:
+
+        # value ← value^2
+        value = (value * value) % p
+        u = (2 * u) % r
+        v = (2 * v) % r
+
+    else:
+
+        # value ← value * a
+        value = (value * a) % p
+        u = (u + 1) % r
+
+    return value, u, v
+
+
+def pollard_rho_discrete_log(p, a, b, r):
+    """
+    Реализация алгоритма из конспекта.
+
+    Вход:
+        p  — простое число
+        a  — элемент порядка r по mod p
+        b  — число
+        r  — порядок a
+
+    Ищем x:
+        a^x ≡ b (mod p)
+    """
+
+    # ---------------------------------
+    # ШАГ 1
+    # выбрать u, v и вычислить
+    # c = a^u * b^v (mod p)
+    # d = c
+    # ---------------------------------
+
+    u_c = 2
+    v_c = 2
+
+    c = (pow(a, u_c, p) * pow(b, v_c, p)) % p
+
+    d = c
+    u_d = u_c
+    v_d = v_c
+
+    step = 0
+
+    print("step | c | log_a(c) | d | log_a(d)")
+    print("-----------------------------------")
+
+    while True:
+
+        print(
+            step,
+            "|",
+            c,
+            "|",
+            f"{u_c}+{v_c}x",
+            "|",
+            d,
+            "|",
+            f"{u_d}+{v_d}x",
+        )
+
+        # ---------------------------------
+        # ШАГ 2
+        # c ← f(c)
+        # d ← f(f(d))
+        # ---------------------------------
+
+        # --- обновление c ---
+        c, u_c, v_c = f(c, u_c, v_c, p, a, b, r)
+
+        # --- обновление d два раза ---
+        d, u_d, v_d = f(d, u_d, v_d, p, a, b, r)
+        d, u_d, v_d = f(d, u_d, v_d, p, a, b, r)
+
+        step += 1
+
+        # ---------------------------------
+        # проверяем столкновение
+        # ---------------------------------
+
+        if c == d:
+            print("\nCollision found")
+            break
+
+    # ---------------------------------
+    # ШАГ 3
+    # приравниваем логарифмы
+    #
+    # u_c + v_c x = u_d + v_d x (mod r)
+    #
+    # (v_c - v_d)x = (u_d - u_c) (mod r)
+    # ---------------------------------
+
+    A = (v_c - v_d) % r
+    B = (u_d - u_c) % r
+
+    print("\nSolve congruence:")
+    print(f"{A} * x ≡ {B} (mod {r})")
+
+    g = gcd(A, r)
+
+    if B % g != 0:
+        print("No solution")
         return None
 
-    a1 = a // g
-    b1 = b // g
-    m1 = m // g
+    A //= g
+    B //= g
+    r //= g
 
-    inv = modinv(a1 % m1, m1)
-    if inv is None:
-        return None
-    return (inv * (b1 % m1)) % m1  # solution modulo m1
+    invA = mod_inverse(A, r)
 
-def pollard_rho_dlp(a: int, b: int, p: int, n: int, max_tries: int = 20, max_steps: int = 200000):
-    """
-    Solve a^x ≡ b (mod p) using Pollard's Rho for DLP.
-    Requires:
-      p prime
-      n = order of a (so a^n ≡ 1 mod p)
-    Returns x in [0, n-1] or None if failed.
-    """
+    x = (invA * B) % r
 
-    def step(c, u, v):
-        # 3-set partition by c % 3
-        r = c % 3
-        if r == 0:
-            # multiply by a
-            c = (c * a) % p
-            u = (u + 1) % n
-        elif r == 1:
-            # multiply by b
-            c = (c * b) % p
-            v = (v + 1) % n
-        else:
-            # square
-            c = (c * c) % p
-            u = (2 * u) % n
-            v = (2 * v) % n
-        return c, u, v
-
-    for _ in range(max_tries):
-        # Random start (u, v), then c = a^u * b^v mod p
-        u1 = random.randrange(0, n)
-        v1 = random.randrange(0, n)
-        c1 = (pow(a, u1, p) * pow(b, v1, p)) % p
-
-        u2, v2, c2 = u1, v1, c1  # hare starts same
-
-        for _step in range(max_steps):
-            # tortoise 1 step
-            c1, u1, v1 = step(c1, u1, v1)
-            # hare 2 steps
-            c2, u2, v2 = step(c2, u2, v2)
-            c2, u2, v2 = step(c2, u2, v2)
-
-            if c1 == c2:
-                # (v2 - v1) * x ≡ (u1 - u2) (mod n)
-                A = (v2 - v1) % n
-                B = (u1 - u2) % n
-
-                x0 = solve_linear_congruence(A, B, n)
-                if x0 is None:
-                    break  # retry with new random start
-
-                # Verify candidate
-                if pow(a, x0, p) == b % p:
-                    return x0
-                else:
-                    break  # retry
-
-    return None
-
+    return x
 
 p = 107
 a = 10
 b = 64
-n = 53  # given in the statement
+r = 53
 
-x = pollard_rho_dlp(a, b, p, n)
-print("x =", x)
-if x is not None:
-    print("check:", pow(a, x, p), "==", b % p)
+x = pollard_rho_discrete_log(p, a, b, r)
+
+print("\nResult x =", x)
+
+print("Check:")
+print(pow(a, x, p))
