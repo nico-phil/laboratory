@@ -52,7 +52,7 @@ This repository is intended for:
 
 - [Рабочий репозиторий] (<https://github.com/nico-phil/laboratory.git>)
 
-- [Релиз v0.1.0] (<https://github.com/nico-phil/laboratory/releases/tag/v0.1.0>)
+- [Релиз v0.6.0] (<https://github.com/nico-phil/laboratory/releases/tag/v0.6.0>)
 
 
 
@@ -88,7 +88,7 @@ This repository is intended for:
 
 - [Рабочий репозиторий] (<https://github.com/nico-phil/laboratory.git>)
 
-- [Релиз v0.2.0].(<https://github.com/nico-phil/laboratory/releases/tag/v0.2.0>)
+- [Релиз v0.6.0].(<https://github.com/nico-phil/laboratory/releases/tag/v0.6.0>)
 
 
 
@@ -122,7 +122,7 @@ This repository is intended for:
 
 - [Рабочий репозиторий] (<https://github.com/nico-phil/laboratory.git>)
 
-- [Релиз v0.2.0] (<https://github.com/nico-phil/laboratory/releases/tag/v0.2.0>)
+- [Релиз v0.6.0] (<https://github.com/nico-phil/laboratory/releases/tag/v0.6.0>)
 
 
 
@@ -156,7 +156,7 @@ This repository is intended for:
 
 - [Рабочий репозиторий] (<https://github.com/nico-phil/laboratory.git>)
 
-- [Релиз v0.2.0] (<https://github.com/nico-phil/laboratory/releases/tag/v0.2.0>)
+- [Релиз v0.6.0] (<https://github.com/nico-phil/laboratory/releases/tag/v0.6.0>)
 
 
 
@@ -190,7 +190,7 @@ This repository is intended for:
 
 - [Рабочий репозиторий] (<https://github.com/nico-phil/laboratory.git>)
 
-- [Релиз v0.2.0].(<https://github.com/nico-phil/laboratory/releases/tag/v0.2.0>)
+- [Релиз v0.6.0].(<https://github.com/nico-phil/laboratory/releases/tag/v0.6.0>)
 
 
 
@@ -224,7 +224,7 @@ This repository is intended for:
 
 - [Рабочий репозиторий] (<https://github.com/nico-phil/laboratory.git>)
 
-- [Релиз v0.3.0] (<https://github.com/nico-phil/laboratory/releases/tag/v0.3.0>)
+- [Релиз v0.6.0] (<https://github.com/nico-phil/laboratory/releases/tag/v0.6.0>)
 
 
 
@@ -258,7 +258,7 @@ This repository is intended for:
 
 - [Рабочий репозиторий] (<https://github.com/nico-phil/laboratory.git>)
 
-- [Релиз v0.4.0] (<https://github.com/nico-phil/laboratory/releases/tag/v0.4.0>)
+- [Релиз v0.6.0] (<https://github.com/nico-phil/laboratory/releases/tag/v0.6.0>)
 
 
 # Лаб 8 - Целочисленная арифметика многократной точности
@@ -291,4 +291,5 @@ This repository is intended for:
 
 - [Рабочий репозиторий] (<https://github.com/nico-phil/laboratory.git>)
 
-- [Релиз v0.5.0] (<https://github.com/nico-phil/laboratory/releases/tag/v0.5.0>)
+- [Релиз v0.6.0] (<https://github.com/nico-phil/laboratory/releases/tag/v0.6.0>)
+
