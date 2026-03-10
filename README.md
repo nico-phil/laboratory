@@ -132,9 +132,9 @@ This repository is intended for:
 
 - [Выполнение лабораторной работы] (<https://rutube.ru/video/private/feba05af0ab4154e7b944255a316250e/?p=tnitNtkqkMp88kRjgG_P5g>)
 
-- [Подготовка отчёта] (<https://rutube.ru/video/private/feba05af0ab4154e7b944255a316250e/?p=tnitNtkqkMp88kRjgG_P5g>)
+- [Подготовка отчёта] (<https://rutube.ru/video/0dae55c3fd262b793990e3c73f7ead05/>)
 
-- [Подготовка презентации] (<https://rutube.ru/video/private/9bfdd30046e1a690de999c63fa37ca88/?p=B73IIPzUFbfTUwzQ4OlKKg>)
+- [Подготовка презентации] (<https://rutube.ru/video/0dae55c3fd262b793990e3c73f7ead05/>)
 
 - [Защита лабораторной работы] (<https://rutube.ru/video/private/9bfdd30046e1a690de999c63fa37ca88/?p=B73IIPzUFbfTUwzQ4OlKKg>)
 
@@ -166,9 +166,9 @@ This repository is intended for:
 
 - [Выполнение лабораторной работы] (<https://rutube.ru/video/private/38a3f54e20edbf54b84334a96f84f539/?p=_Rvaa2W004VJwUSkbnZJAg>)
 
-- [Подготовка отчёта] (<https://rutube.ru/video/private/38a3f54e20edbf54b84334a96f84f539/?p=_Rvaa2W004VJwUSkbnZJAg>)
+- [Подготовка отчёта] (<https://rutube.ru/video/0dae55c3fd262b793990e3c73f7ead05/>)
 
-- [Подготовка презентации] (<https://rutube.ru/video/private/38a3f54e20edbf54b84334a96f84f539/?p=_Rvaa2W004VJwUSkbnZJAg>)
+- [Подготовка презентации] (<https://rutube.ru/video/0dae55c3fd262b793990e3c73f7ead05/>)
 
 - [Защита лабораторной работы] (<https://rutube.ru/video/private/38a3f54e20edbf54b84334a96f84f539/?p=_Rvaa2W004VJwUSkbnZJAg>)
 
